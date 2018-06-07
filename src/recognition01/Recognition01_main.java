@@ -18,6 +18,7 @@ public class Recognition01_main {
 		service.setApiKey("j16005");
 
 		DetectFacesOptions detectFacesOptions = null;
+		MySQL mysql = new MySQL();
 		try {
 			detectFacesOptions = new DetectFacesOptions.Builder()
 			  .imagesFile(new File("img/prez.jpg"))
@@ -42,12 +43,13 @@ public class Recognition01_main {
 			double age_score=node.get("images").get(0).get("faces").get(0)
 					.get("age").get("score").asDouble();
 			System.out.println("age_score :"+age_score);
-			String Gender=node.get("images").get(0).get("faces").get(0)
-					.get("gender").get("gender").asText();
+			int Gender=node.get("images").get(0).get("faces").get(0)
+					.get("gender").get("gender").asInt();
 			System.out.println("Gender :"+Gender);
 			double Gender_score=node.get("images").get(0).get("faces").get(0)
 					.get("gender").get("score").asDouble();
 			System.out.println("Gender_score :"+Gender_score);
+			mysql.updateImage(age_min,age_max,age_score,Gender,Gender_score);
 
 		}
 		catch (IOException e) {
